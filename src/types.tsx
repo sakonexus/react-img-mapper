@@ -25,6 +25,7 @@ export interface Container extends HTMLDivElement {
 export interface MapAreas {
   id?: string;
   coords: [];
+  active: false;
   href: string;
   shape: string;
   fillColor: string;
