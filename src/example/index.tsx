@@ -15,8 +15,7 @@ const Example: React.FC = () => {
       const area = data.map((cur: Record<string, unknown>, i: number) => {
         if (i % 4 === 0) {
           const temp = { ...cur };
-          console.log(temp.id);
-          temp.active = false;
+          temp.disabled = true;
           return temp;
         }
         return cur;
@@ -35,6 +34,7 @@ const Example: React.FC = () => {
         name: 'my-map',
         areas,
       }}
+      onClick={(area, index, e) => console.log(area, index, e)}
     />
   );
 };

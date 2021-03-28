@@ -26,6 +26,7 @@ export interface MapAreas {
   id?: string;
   coords: [];
   active: boolean;
+  disabled: boolean;
   href: string;
   shape: string;
   fillColor: string;
@@ -53,6 +54,7 @@ export interface ImageMapperProps {
   areaKeyName?: 'id';
   containerRef?: { current: HTMLDivElement } | null;
   active?: boolean;
+  disabled?: boolean;
   fillColor?: string;
   strokeColor?: string;
   lineWidth?: number;
@@ -84,6 +86,7 @@ export const ImageMapperDefaultProps: Partial<ImageMapperProps> = {
   areaKeyName: 'id',
   containerRef: null,
   active: true,
+  disabled: false,
   fillColor: 'rgba(255, 255, 255, 0.5)',
   strokeColor: 'rgba(0, 0, 0, 0.5)',
   lineWidth: 1,
