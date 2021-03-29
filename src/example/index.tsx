@@ -11,32 +11,41 @@ const Example: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      const data = await (await fetch(JSON)).json();
-      const area = data.map((cur: Record<string, unknown>, i: number) => {
-        if (i % 4 === 0) {
-          const temp = { ...cur };
-          temp.active = false;
-          temp.preFillColor = 'red';
-          return temp;
-        }
-        return cur;
-      });
+      const area = await (await fetch(JSON)).json();
       setAreas(area);
       console.log(area);
     })();
   }, []);
 
+  const handleClick = () => {
+    const area = areas.map((cur: Record<string, unknown>, i: number) => {
+      if (i % 4 === 0) {
+        const temp = { ...cur };
+        // temp.active = false;
+        temp.preFillColor = 'rgba(255,255,255,.25)';
+        return temp;
+      }
+      return cur;
+    });
+    setAreas(area);
+  };
+
   if (!areas.length) return null;
 
   return (
-    <ImageMapper
-      src={URL}
-      map={{
-        name: 'my-map',
-        areas,
-      }}
-      onClick={(area, index, e) => console.log(area, index, e)}
-    />
+    <React.Fragment>
+      <ImageMapper
+        src={URL}
+        map={{
+          name: 'my-map',
+          areas,
+        }}
+        onClick={(area, index, e) => console.log(area, index, e)}
+      />
+      <button type="button" onClick={handleClick}>
+        Hello
+      </button>
+    </React.Fragment>
   );
 };
 
