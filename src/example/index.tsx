@@ -15,7 +15,8 @@ const Example: React.FC = () => {
       const area = data.map((cur: Record<string, unknown>, i: number) => {
         if (i % 4 === 0) {
           const temp = { ...cur };
-          temp.disabled = true;
+          temp.active = false;
+          temp.preFillColor = 'red';
           return temp;
         }
         return cur;
