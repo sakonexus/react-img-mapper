@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ImageMapper from '../ImageMapper';
 
 const URL = 'https://raw.githubusercontent.com/img-mapper/react-docs/master/src/assets/example.jpg';
@@ -8,6 +8,7 @@ const JSON =
 
 const Example: React.FC = () => {
   const [areas, setAreas] = useState([]);
+  const ref = useRef(null);
 
   useEffect(() => {
     (async () => {
@@ -22,7 +23,7 @@ const Example: React.FC = () => {
       if (i % 4 === 0) {
         const temp = { ...cur };
         // temp.active = false;
-        temp.preFillColor = 'rgba(255,255,255,.25)';
+        temp.preFillColor = 'red';
         return temp;
       }
       return cur;
@@ -35,15 +36,21 @@ const Example: React.FC = () => {
   return (
     <React.Fragment>
       <ImageMapper
+        containerRef={ref}
         src={URL}
         map={{
           name: 'my-map',
           areas,
         }}
-        onClick={(area, index, e) => console.log(area, index, e)}
+        // onClick={(area, index, e) => console.log(area, index, e)}
+        stayHighlighted
+        // stayMultiHighlighted
       />
       <button type="button" onClick={handleClick}>
         Hello
+      </button>
+      <button type="button" onClick={() => ref.current.clearHighlightedArea()}>
+        Clear
       </button>
     </React.Fragment>
   );
