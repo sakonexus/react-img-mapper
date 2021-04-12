@@ -6,12 +6,20 @@ import {
   Container,
   MapAreas,
   CustomArea,
-  ImageEvent,
   AreaEvent,
   rerenderPropsList,
   ImageMapperProps,
   ImageMapperDefaultProps,
 } from './types';
+import {
+  mouseMove,
+  imageMouseMove,
+  imageClick,
+  mouseDown,
+  mouseUp,
+  touchStart,
+  touchEnd,
+} from './events';
 
 const ImageMapper: React.FC<ImageMapperProps> = (props: ImageMapperProps) => {
   const {
@@ -266,21 +274,6 @@ const ImageMapper: React.FC<ImageMapperProps> = (props: ImageMapperProps) => {
     }
   };
 
-  const imageClick = (event: ImageEvent) => {
-    if (props.onImageClick) {
-      event.preventDefault();
-      props.onImageClick(event);
-    }
-  };
-
-  const mouseMove = (area: CustomArea, index: number, event: AreaEvent) => {
-    if (props.onMouseMove) props.onMouseMove(area, index, event);
-  };
-
-  const imageMouseMove = (event: ImageEvent) => {
-    if (props.onImageMouseMove) props.onImageMouseMove(event);
-  };
-
   const scaleCoords = (coords: []): number[] => {
     const scale =
       widthProp && imageWidthProp && imageWidthProp > 0
@@ -348,8 +341,12 @@ const ImageMapper: React.FC<ImageMapperProps> = (props: ImageMapperProps) => {
           coords={scaledCoords.join(',')}
           onMouseEnter={event => hoverOn(extendedArea, index, event)}
           onMouseLeave={event => hoverOff(extendedArea, index, event)}
-          onMouseMove={event => mouseMove(extendedArea, index, event)}
+          onMouseMove={event => mouseMove(extendedArea, index, event, props)}
           onClick={event => click(extendedArea, index, event)}
+          onMouseDown={event => mouseDown(extendedArea, index, event, props)}
+          onMouseUp={event => mouseUp(extendedArea, index, event, props)}
+          onTouchStart={event => touchStart(extendedArea, index, event, props)}
+          onTouchEnd={event => touchEnd(extendedArea, index, event, props)}
           href={area.href}
           alt="map"
         />
@@ -367,8 +364,8 @@ const ImageMapper: React.FC<ImageMapperProps> = (props: ImageMapperProps) => {
         alt="map"
         ref={img}
         onLoad={() => initCanvas(true)}
-        onClick={imageClick}
-        onMouseMove={imageMouseMove}
+        onClick={event => imageClick(event, props)}
+        onMouseMove={event => imageMouseMove(event, props)}
       />
       <canvas className="img-mapper-canvas" ref={canvas} style={styles().canvas} />
       <map className="img-mapper-map" name={map.name} style={styles().map}>

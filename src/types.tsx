@@ -45,6 +45,7 @@ export interface CustomArea extends MapAreas {
   center?: [number, number];
 }
 
+export type TouchEvent = React.TouchEvent<HTMLAreaElement>;
 export type AreaEvent = React.MouseEvent<HTMLAreaElement, MouseEvent>;
 export type ImageEvent = React.MouseEvent<HTMLImageElement, MouseEvent>;
 
@@ -72,6 +73,10 @@ export interface ImageMapperProps {
   onImageClick?: ((e: ImageEvent) => void) | null;
   onImageMouseMove?: ((e: ImageEvent) => void) | null;
   onClick?: ((area: CustomArea, index: number, e: AreaEvent) => void) | null;
+  onMouseDown?: ((event: CustomArea, index: number, e: AreaEvent) => void) | null;
+  onMouseUp?: ((event: CustomArea, index: number, e: AreaEvent) => void) | null;
+  onTouchStart?: ((event: CustomArea, index: number, e: TouchEvent) => void) | null;
+  onTouchEnd?: ((event: CustomArea, index: number, e: TouchEvent) => void) | null;
   onMouseMove?: ((area: CustomArea, index: number, e: AreaEvent) => void) | null;
   onMouseEnter?: ((area: CustomArea, index: number, e: AreaEvent) => void) | null;
   onMouseLeave?: ((area: CustomArea, index: number, e: AreaEvent) => void) | null;
@@ -104,6 +109,10 @@ export const ImageMapperDefaultProps: Partial<ImageMapperProps> = {
   onImageClick: null,
   onImageMouseMove: null,
   onClick: null,
+  onMouseDown: null,
+  onMouseUp: null,
+  onTouchStart: null,
+  onTouchEnd: null,
   onMouseMove: null,
   onMouseEnter: null,
   onMouseLeave: null,
