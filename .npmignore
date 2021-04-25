@@ -7,3 +7,5 @@ src
 .eslintignore
 .eslintrc
 .prettierrc
+yarn-error.log
+/.husky

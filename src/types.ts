@@ -3,6 +3,7 @@ import React from 'react';
 export const rerenderPropsList = [
   'src',
   'active',
+  'disabled',
   'width',
   'height',
   'imgWidth',
@@ -24,11 +25,11 @@ export interface Container extends HTMLDivElement {
 
 export interface MapAreas {
   id?: string;
+  shape: string;
   coords: [];
   active: boolean;
   disabled: boolean;
   href: string;
-  shape: string;
   fillColor: string;
   strokeColor: string;
   lineWidth: number;
@@ -45,6 +46,7 @@ export interface CustomArea extends MapAreas {
   center?: [number, number];
 }
 
+export type CTX = { current: CanvasRenderingContext2D } | null;
 export type TouchEvent = React.TouchEvent<HTMLAreaElement>;
 export type AreaEvent = React.MouseEvent<HTMLAreaElement, MouseEvent>;
 export type ImageEvent = React.MouseEvent<HTMLImageElement, MouseEvent>;
@@ -73,10 +75,10 @@ export interface ImageMapperProps {
   onImageClick?: ((e: ImageEvent) => void) | null;
   onImageMouseMove?: ((e: ImageEvent) => void) | null;
   onClick?: ((area: CustomArea, index: number, e: AreaEvent) => void) | null;
-  onMouseDown?: ((event: CustomArea, index: number, e: AreaEvent) => void) | null;
-  onMouseUp?: ((event: CustomArea, index: number, e: AreaEvent) => void) | null;
-  onTouchStart?: ((event: CustomArea, index: number, e: TouchEvent) => void) | null;
-  onTouchEnd?: ((event: CustomArea, index: number, e: TouchEvent) => void) | null;
+  onMouseDown?: ((area: CustomArea, index: number, e: AreaEvent) => void) | null;
+  onMouseUp?: ((area: CustomArea, index: number, e: AreaEvent) => void) | null;
+  onTouchStart?: ((area: CustomArea, index: number, e: TouchEvent) => void) | null;
+  onTouchEnd?: ((area: CustomArea, index: number, e: TouchEvent) => void) | null;
   onMouseMove?: ((area: CustomArea, index: number, e: AreaEvent) => void) | null;
   onMouseEnter?: ((area: CustomArea, index: number, e: AreaEvent) => void) | null;
   onMouseLeave?: ((area: CustomArea, index: number, e: AreaEvent) => void) | null;
