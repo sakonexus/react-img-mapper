@@ -116,6 +116,7 @@
           ]
         }
       }
-    ]
+    ],
+    "react/destructuring-assignment": "off"
   }
 }

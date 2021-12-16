@@ -399,6 +399,8 @@
     "name": "13",
     "fillColor": "#00ff194c",
     "strokeColor": "black",
+    "preFillColor": "#00ff194c",
+    "lineWidth": 2,
     "coords": [
       211.10945273631836,
       161.6915422885572,

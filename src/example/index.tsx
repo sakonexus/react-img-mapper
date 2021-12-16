@@ -1,48 +1,26 @@
-/* eslint-disable */
-import React, { useState, useEffect, useRef } from 'react';
-import ImageMapper from '../ImageMapper';
-import areass from './area.json';
+import React, { useState, useRef } from 'react';
+import ImageMapper, { MapAreas } from '../ImageMapper';
+import JSON from './area.json';
 
 const URL = 'https://raw.githubusercontent.com/img-mapper/react-docs/master/src/assets/example.jpg';
 
-const JSON =
-  'https://raw.githubusercontent.com/img-mapper/react-docs/master/src/assets/example.json';
+// const JSON =
+//   'https://raw.githubusercontent.com/img-mapper/react-docs/master/src/assets/example.json';
 
 const Example: React.FC = () => {
-  // const [areas, setAreas] = useState([]);
-  const [areas, setAreas] = useState(areass);
+  const [areas, setAreas] = useState<Array<MapAreas>>(JSON);
   const ref = useRef(null);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const area = await (await fetch(JSON)).json();
-  //     const areaas = area.map((cur: Record<string, unknown>, i: number) => {
-  //       if (i % 4 === 0) {
-  //         const temp = { ...cur };
-  //         // temp.active = false;
-  //         // temp.preFillColor = 'red';
-  //         return temp;
-  //       }
-  //       return cur;
-  //     });
-  //     areaas[0].prefillColor = 'red';
-  //     setAreas(areaas);
-  //     console.log(areaas);
-  //   })();
-  // }, []);
-
   const handleClick = () => {
-    // const area = areas.map((cur: Record<string, unknown>, i: number) => {
-    //   if (i % 4 === 0) {
-    //     const temp = { ...cur };
-    //     // temp.active = false;
-    //     // temp.preFillColor = 'red';
-    //     return temp;
-    //   }
-    //   return cur;
-    // });
-    // area[0].prefillColor = 'red';
-    // setAreas(area);
+    const area = areas.map((cur: MapAreas, i: number) => {
+      if (i % 4 === 0) {
+        const temp = { ...cur };
+        temp.preFillColor = 'red';
+        return temp;
+      }
+      return cur;
+    });
+    setAreas(area);
   };
 
   if (!areas.length) return null;
@@ -51,12 +29,20 @@ const Example: React.FC = () => {
     <React.Fragment>
       <ImageMapper
         src={URL}
+        containerRef={ref}
         map={{
           name: 'my-map',
           areas,
         }}
         responsive
         parentWidth={500}
+        stayHighlighted
+        stayMultiHighlighted
+        toggleHighlighted
+        fillColor="red"
+        strokeColor="black"
+        lineWidth={8}
+        onLoad={(e, dimensions) => console.log(e, dimensions)}
       />
       <button type="button" onClick={handleClick}>
         Hello
