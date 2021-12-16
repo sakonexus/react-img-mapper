@@ -1,16 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import isEqual from 'react-fast-compare';
 import styles from './styles';
-import {
-  Map,
-  Container,
-  MapAreas,
-  CustomArea,
-  AreaEvent,
-  rerenderPropsList,
-  ImageMapperProps,
-  ImageMapperDefaultProps,
-} from './types';
+import { Map, Container, MapAreas, CustomArea, AreaEvent, ImageMapperProps } from './types';
+import { rerenderPropsList, ImageMapperDefaultProps } from './constants';
 import callingFn from './draw';
 import {
   mouseMove,
@@ -21,6 +13,8 @@ import {
   touchStart,
   touchEnd,
 } from './events';
+
+export * from './types';
 
 const ImageMapper: React.FC<ImageMapperProps> = (props: ImageMapperProps) => {
   const {
@@ -48,7 +42,6 @@ const ImageMapper: React.FC<ImageMapperProps> = (props: ImageMapperProps) => {
   const [storedMap, setStoredMap] = useState<Map>(map);
   const [isRendered, setRendered] = useState<boolean>(false);
   const [imgRef, setImgRef] = useState<HTMLImageElement>(null);
-  const [isClearFnCalled, setClearFnCall] = useState<boolean>(false);
   const container = useRef<Container>(null);
   const img = useRef<HTMLImageElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
@@ -74,20 +67,13 @@ const ImageMapper: React.FC<ImageMapperProps> = (props: ImageMapperProps) => {
   useEffect(() => {
     container.current.clearHighlightedArea = () => {
       setMap(storedMap);
-      setClearFnCall(true);
+      initCanvas();
     };
 
     if (containerRef) {
       containerRef.current = container.current;
     }
   }, []);
-
-  useEffect(() => {
-    if (isClearFnCalled) {
-      setClearFnCall(false);
-      initCanvas();
-    }
-  }, [isClearFnCalled]);
 
   useEffect(() => {
     if (responsive) initCanvas();
@@ -206,7 +192,7 @@ const ImageMapper: React.FC<ImageMapperProps> = (props: ImageMapperProps) => {
     }
   };
 
-  const scaleCoords = (coords: []): number[] => {
+  const scaleCoords = (coords: number[]): number[] => {
     const scale =
       widthProp && imageWidthProp && imageWidthProp > 0
         ? (widthProp as number) / imageWidthProp
